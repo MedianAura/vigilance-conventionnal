@@ -11,7 +11,7 @@
     "ci:jest": "jest",
     "ci:prettier": "prettier --check ./**/*.{js,ts,json,vue,html,css,less}",
     "ci:tsc": "tsc -p tsconfig.json --noEmit",
-    "ci:xo": "xo src",
+    "ci:xo": "xo",
     "fix:prettier": "prettier --write ./**/*.{js,ts,json,vue,html,css,less}",
     "start": "node dist/main.js commit",
     "unit:coverage": "jest --coverage",
@@ -51,7 +51,7 @@
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-node-externals": "^1.7.2",
-    "xo": "^0.29.1"
+    "xo": "^0.28.3"
   },
   "lint-staged": {
     "./src/**/*.*": [
@@ -66,7 +66,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npx lint-staged"
+      "pre-commit": "npm run ci:tsc && npx lint-staged"
     }
   }
 }
