@@ -22,7 +22,6 @@ export class Commit {
     const result = spawnSync('git', ['commit', '-m', commitMessage]);
 
     console.log(result.stdout.toString());
-
     console.warn(result.stderr.toString());
   }
 }
