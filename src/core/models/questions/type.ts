@@ -38,7 +38,7 @@ const TypeQuestion: ListQuestion = {
     },
     {
       name: 'Chore',
-      value: 'chose'
+      value: 'chore'
     }
   ],
   name: 'type'

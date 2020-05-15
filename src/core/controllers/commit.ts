@@ -47,8 +47,8 @@ export class Commit {
   private async commitFilesToGit(): Promise<void> {
     console.log(2);
     return new Promise((resolve) => {
-      const command = spawn('git', ['commit', '-m', this.commitMessage]);
-      console.log('git', ['commit', '-m', this.commitMessage]);
+      const command = spawn('git', ['commit', '-a', '-m', `"${this.commitMessage}"`], { stdio: 'inherit' });
+      console.log('git', ['commit', '-a', '-m', `"${this.commitMessage}"`]);
       command.stdout.on('data', (data) => {
         console.log(data.toString());
       });
