@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "caporal": "^1.4.0",
+    "iconv-lite": "^0.5.1",
     "inquirer": "^7.1.0",
     "inversify": "^5.0.1",
     "inversify-binding-decorators": "^4.0.0",
@@ -62,5 +63,8 @@
     "**/*.js": [
       "npm run ci:xo"
     ]
+  },
+  "husky": {
+    "pre-commit": "lint-staged"
   }
 }
