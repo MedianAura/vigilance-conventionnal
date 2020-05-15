@@ -9,6 +9,10 @@ const TypeQuestion: ListQuestion = {
       value: 'feature'
     },
     {
+      name: 'Correction',
+      value: 'fix'
+    },
+    {
       name: 'Changement',
       value: 'change'
     },

@@ -1,5 +1,5 @@
 import inquirer from 'inquirer';
-import { spawn } from 'child_process';
+import { spawnSync } from 'child_process';
 import { DescriptionQuestion, LogQuestion, TaskQuestion, TypeQuestion } from '../models/questions';
 
 export class Commit {
@@ -19,50 +19,16 @@ export class Commit {
     }
 
     this.commitMessage = `${answers.type}${logMessage}${taskMessage}: ${answers.description}`;
-    await this.commitFilesToGit();
+    this.commitFilesToGit();
   }
 
-  private async addFilesToGit(): Promise<void> {
-    console.log(1);
-    return new Promise((resolve) => {
-      const command = spawn('git', ['add', '.']);
-      console.log('git', ['add', '.']);
-      command.stdout.on('data', (data: any) => {
-        console.log(data.toString());
-      });
-
-      command.stderr.on('data', (data: any) => {
-        console.error(`grep stderr: ${data}`);
-      });
-
-      command.on('close', (code) => {
-        if (code !== 0) {
-          console.log(`grep process exited with code ${code}`);
-          resolve();
-        }
-      });
-    });
+  private addFilesToGit(): void {
+    spawnSync('git', ['add', '.']);
+    console.log('git', ['add', '.']);
   }
 
-  private async commitFilesToGit(): Promise<void> {
-    console.log(2);
-    return new Promise((resolve) => {
-      const command = spawn('git', ['commit', '-a', '-m', `"${this.commitMessage}"`], { stdio: 'inherit' });
-      console.log('git', ['commit', '-a', '-m', `"${this.commitMessage}"`]);
-      command.stdout.on('data', (data) => {
-        console.log(data.toString());
-      });
-
-      command.stderr.on('data', (data) => {
-        console.error(`grep stderr: ${data}`);
-      });
-
-      command.on('close', (code) => {
-        if (code !== 0) {
-          console.log(`grep process exited with code ${code}`);
-          resolve();
-        }
-      });
-    });
+  private commitFilesToGit(): void {
+    console.log('git', ['commit', '-a', '-m', `"${this.commitMessage}"`]);
+    spawnSync('git', ['commit', '-a', '-m', `"${this.commitMessage}"`], { stdio: 'inherit' });
   }
 }
