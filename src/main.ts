@@ -11,14 +11,17 @@
 
 import prog from 'caporal';
 import packageConfig from '../package.json';
+import { Commit } from './core/controllers/commit';
 
 prog
   .name(packageConfig.name)
   .version(packageConfig.version)
   // Command COMMIT
   .command('commit', 'Add a commit')
-  .action(() => {
-    console.log('Test');
+  .action(async () => {
+    await new Commit().start();
+
+    process.exit(0);
   })
   // Command GENERATE
   .command('generate', 'Generate changelog')
