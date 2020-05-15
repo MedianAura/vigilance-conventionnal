@@ -28,7 +28,7 @@ export class Commit {
   }
 
   private commitFilesToGit(): void {
-    console.log('git', ['commit', '-a', '-m', `"${this.commitMessage}"`]);
-    spawnSync('git', ['commit', '-a', '-m', `"${this.commitMessage}"`], { stdio: 'inherit' });
+    console.log('git', ['commit', '-a', '-m', this.commitMessage]);
+    spawnSync('git', ['commit', '-a', '-m', this.commitMessage], { stdio: 'inherit' });
   }
 }
