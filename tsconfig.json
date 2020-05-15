@@ -4,10 +4,7 @@
     "module": "CommonJS",
     "allowJs": true,
     "checkJs": true,
-    "lib": [
-      "esnext",
-      "dom"
-    ],
+    "lib": ["esnext", "dom"],
     "baseUrl": ".",
     "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
@@ -17,13 +14,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true
   },
-  "files": [
-    "./src/entry.ts"
-  ],
-  "include": [
-    "./src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "files": ["./src/entry.ts"],
+  "include": ["./src/**/*.ts"],
+  "exclude": ["node_modules"]
 }

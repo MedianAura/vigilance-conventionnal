@@ -1,8 +1,10 @@
 import inquirer from 'inquirer';
-import { spawnSync } from 'child_process';
+import { spawn } from 'child_process';
 import { DescriptionQuestion, LogQuestion, TaskQuestion, TypeQuestion } from '../models/questions';
 
 export class Commit {
+  private commitMessage = '';
+
   public async start(): Promise<void> {
     const answers = await inquirer.prompt([LogQuestion, TypeQuestion, TaskQuestion, DescriptionQuestion]);
 
@@ -12,16 +14,55 @@ export class Commit {
     }
 
     let taskMessage = '';
-    if (!isNaN(answers.task)) {
+    if (!Number.isNaN(answers.task)) {
       taskMessage = `(${answers.task})`;
     }
 
-    const commitMessage = `${answers.type}${logMessage}${taskMessage}: ${answers.description}`;
+    this.commitMessage = `${answers.type}${logMessage}${taskMessage}: ${answers.description}`;
+    await this.commitFilesToGit();
+  }
 
-    spawnSync('git', ['add', '.']);
-    const result = spawnSync('git', ['commit', '-m', commitMessage]);
+  private async addFilesToGit(): Promise<void> {
+    console.log(1);
+    return new Promise((resolve) => {
+      const command = spawn('git', ['add', '.']);
+      console.log('git', ['add', '.']);
+      command.stdout.on('data', (data: any) => {
+        console.log(data.toString());
+      });
 
-    console.log(result.stdout.toString());
-    console.warn(result.stderr.toString());
+      command.stderr.on('data', (data: any) => {
+        console.error(`grep stderr: ${data}`);
+      });
+
+      command.on('close', (code) => {
+        if (code !== 0) {
+          console.log(`grep process exited with code ${code}`);
+          resolve();
+        }
+      });
+    });
+  }
+
+  private async commitFilesToGit(): Promise<void> {
+    console.log(2);
+    return new Promise((resolve) => {
+      const command = spawn('git', ['commit', '-m', this.commitMessage]);
+      console.log('git', ['commit', '-m', this.commitMessage]);
+      command.stdout.on('data', (data) => {
+        console.log(data.toString());
+      });
+
+      command.stderr.on('data', (data) => {
+        console.error(`grep stderr: ${data}`);
+      });
+
+      command.on('close', (code) => {
+        if (code !== 0) {
+          console.log(`grep process exited with code ${code}`);
+          resolve();
+        }
+      });
+    });
   }
 }

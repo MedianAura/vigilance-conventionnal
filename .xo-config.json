@@ -1,4 +1,13 @@
 {
-  "space": true,
-  "prettier": true
+  "space": false,
+  "prettier": false,
+  "rules": {
+    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/quotes": "off",
+    "@typescript-eslint/restrict-template-expressions": [1, { "allowAny": true }],
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
+    "object-curly-spacing": "off",
+    "arrow-parens": "off"
+  }
 }

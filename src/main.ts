@@ -1,4 +1,5 @@
-// import { spawnSync } from 'child_process'
+#!/usr/bin/env node
+// Import { spawnSync } from 'child_process'
 //
 // // git log --oneline $(git describe --tags --abbrev=0 @^)..@
 // const test = spawnSync("git", ["describe", "--tags","--abbrev=0"]);
