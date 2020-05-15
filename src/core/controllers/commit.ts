@@ -17,8 +17,12 @@ export class Commit {
     }
 
     const commitMessage = `${answers.type}${logMessage}${taskMessage}: ${answers.description}`;
-    const result = spawnSync('git', ['commit', '-a', '-m', commitMessage]);
+
+    spawnSync('git', ['add', '.']);
+    const result = spawnSync('git', ['commit', '-m', commitMessage]);
+
     console.log(result.stdout.toString());
+
     console.warn(result.stderr.toString());
   }
 }
