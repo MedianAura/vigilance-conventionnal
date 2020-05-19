@@ -1,7 +1,7 @@
-import { EditorQuestion } from 'inquirer';
+import { InputQuestion } from 'inquirer';
 
-const DescriptionQuestion: EditorQuestion = {
-  type: 'editor',
+const DescriptionQuestion: InputQuestion = {
+  type: 'input',
   message: 'Change description ?',
   name: 'description'
 };

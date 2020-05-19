@@ -19,20 +19,45 @@
     "prewatch": "rimraf dist",
     "watch": "webpack --watch --mode development"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run ci:tsc && npx lint-staged"
+    }
+  },
+  "lint-staged": {
+    "./src/**/*.*": [
+      "npm run ci:prettier"
+    ],
+    "./src/**/*.js": [
+      "npm run ci:xo"
+    ],
+    "./src/**/*.ts": [
+      "npm run ci:xo"
+    ]
+  },
   "dependencies": {
     "caporal": "^1.4.0",
+    "dedent": "^0.7.0",
     "iconv-lite": "^0.5.1",
     "inquirer": "^7.1.0",
     "inversify": "^5.0.1",
     "inversify-binding-decorators": "^4.0.0",
     "inversify-inject-decorators": "^3.1.0",
-    "reflect-metadata": "^0.1.13"
+    "lodash": "^4.17.15",
+    "longest": "^2.0.1",
+    "reflect-metadata": "^0.1.13",
+    "sprintf-js": "^1.1.2",
+    "word-wrap": "^1.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
+    "@types/dedent": "^0.7.0",
     "@types/inquirer": "^6.5.0",
     "@types/jest": "^25.2.2",
+    "@types/lodash": "^4.14.151",
     "@types/node": "^14.0.1",
+    "@types/sprintf-js": "^1.1.2",
+    "@types/word-wrap": "^1.2.1",
     "babel-loader": "^8.1.0",
     "cache-loader": "^4.1.0",
     "husky": "^4.2.5",
@@ -52,21 +77,5 @@
     "webpack-cli": "^3.3.11",
     "webpack-node-externals": "^1.7.2",
     "xo": "^0.28.3"
-  },
-  "lint-staged": {
-    "./src/**/*.*": [
-      "npm run ci:prettier"
-    ],
-    "./src/**/*.ts": [
-      "npm run ci:xo"
-    ],
-    "./src/**/*.js": [
-      "npm run ci:xo"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run ci:tsc && npx lint-staged"
-    }
   }
 }

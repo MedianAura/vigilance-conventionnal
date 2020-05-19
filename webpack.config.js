@@ -14,7 +14,7 @@ const cacheLoader = {
 
 const config = {
   entry: {
-    main: './src/main.ts'
+    main: './src/entry.ts'
   },
   output: {
     filename: '[name].js',
