@@ -65,7 +65,7 @@ const choices = types.map((type) => {
 
 const TypeQuestion: ListQuestion = {
   type: 'list',
-  message: "Select the type of change that you're committing :",
+  message: 'Choisir le type de changement pour le commit :',
   choices,
   name: 'type'
 };
