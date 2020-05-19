@@ -1,14 +1,14 @@
 import inquirer from 'inquirer';
 import { DescriptionQuestion, LogQuestion, TaskQuestion, TypeQuestion } from '../models/questions';
 import { sprintf } from 'sprintf-js';
-import { InjectFromContainer } from '../decorators/inject-from-container';
+import { injectFromContainer } from '../decorators/inject-from-container';
 import { Git, Logger } from '../services';
 
 export class Commit {
-  @InjectFromContainer('Git')
+  @injectFromContainer('Git')
   protected git: Git;
 
-  @InjectFromContainer('Logger')
+  @injectFromContainer('Logger')
   protected logger: Logger;
 
   public async start(): Promise<void> {
@@ -37,6 +37,10 @@ export class Commit {
       description: answers.description
     });
 
-    this.git.commit(commitMessage);
+    try {
+      await this.git.commit(commitMessage);
+    } catch (error) {
+      this.logger.error(error.toString());
+    }
   }
 }

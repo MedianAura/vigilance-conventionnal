@@ -1,4 +1,4 @@
-import { spawnSync, exec } from 'child_process';
+import { spawnSync, spawn, exec } from 'child_process';
 import dedent from 'dedent';
 import { inject, injectable } from 'inversify';
 import { Logger } from './logger';
@@ -8,9 +8,33 @@ export class Git {
   @inject('Logger')
   public logger: Logger;
 
-  public commit(commitMessage): void {
-    this.logger.log('git', ['commit', '-m', dedent(commitMessage)]);
-    spawnSync('git', ['commit', '-m', dedent(commitMessage)], { stdio: 'inherit' });
+  public async commit(commitMessage): Promise<any> {
+    // Definition de l'action
+    const command = 'git';
+    const args = ['commit', '-m', dedent(commitMessage)];
+
+    return new Promise((resolve, reject) => {
+      this.logger.log(command, args);
+      const child = spawn(command, args, { stdio: 'inherit' });
+
+      child.on('error', (err) => {
+        reject(err);
+      });
+
+      child.on('exit', (code) => {
+        if (code) {
+          if (code === 128) {
+            this.logger.warn(`Git exited with code 128. Did you forget to run:
+              git config --global user.email "you@example.com"
+              git config --global user.name "Your Name"
+            `);
+          }
+          return reject(new Error(`git exited with error code ${code.toString()}`));
+        }
+
+        resolve();
+      });
+    });
   }
 
   /**
@@ -25,11 +49,11 @@ export class Git {
         {
           maxBuffer: Infinity
         },
-        function (error, stdout) {
+        (error, stdout) => {
           if (error) {
             return reject(error);
           }
-          let output = stdout || '';
+          const output = stdout || '';
           resolve(output.trim().length === 0);
         }
       );
@@ -37,7 +61,8 @@ export class Git {
   }
 
   public async log(): Promise<void> {
-    let command = 'git log TAG..@';
+    // Add this when ready
+    // const command = 'git log TAG..@';
     //
     // // git log --oneline $(git describe --tags --abbrev=0 @^)..@
     // const test = spawnSync("git", ["describe", "--tags","--abbrev=0"]);
@@ -54,8 +79,8 @@ export class Git {
    */
   public getLatestTag(): string {
     // Definition de l'action
-    let command = 'git';
-    let args = ['describe', '--tags', '--abbrev=0'];
+    const command = 'git';
+    const args = ['describe', '--tags', '--abbrev=0'];
 
     this.logger.log(command, args);
     const tag = spawnSync(command, args);

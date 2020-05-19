@@ -54,10 +54,10 @@ const types = [
   }
 ];
 
-const length = longest(types.map((type) => type.name)).length + 1;
+const length = (longest(types.map((type) => type.name)) as string).length + 1;
 const choices = types.map((type) => {
   return {
-    name: (type.name + ':').padEnd(length) + ' ' + type.description,
+    name: `${(type.name + ':').padEnd(length)} ${type.description}`,
     value: type.value,
     short: type.value
   };
@@ -66,7 +66,7 @@ const choices = types.map((type) => {
 const TypeQuestion: ListQuestion = {
   type: 'list',
   message: "Select the type of change that you're committing :",
-  choices: choices,
+  choices,
   name: 'type'
 };
 
