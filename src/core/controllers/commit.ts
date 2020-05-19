@@ -46,7 +46,7 @@ export class Commit {
       type: answers.type,
       log: logMessage,
       task: taskMessage,
-      description: answers.description
+      description: answers.subject
     });
   }
 }
