@@ -38,7 +38,7 @@ export class Commit {
     }
 
     let taskMessage = '';
-    if (!Number.isNaN(answers.task)) {
+    if (answers.isTaskAffected) {
       taskMessage = `(${answers.task})`;
     }
 
