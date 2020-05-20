@@ -2,6 +2,32 @@
 
 [//]: # "TEMPLATE"
 
+## [[1.2.2.0] - 2020-05-20](https://git.vigilance.local/slafleur/conventionnal/blob/master/CHANGELOG.md)
+    
+#### Nouvelles fonctionnalités
+
+#### Correctifs
+
+- [2020-05-20] Empecher l'application de planter quand le fichier de cache n'est pas présent en mode retry.
+
+#### Changements
+
+- [2020-05-20] Toujours afficher le sujet et la description dans un commit qui sera envoyé du commit.
+
+- [2020-05-20] Avoir un sujet pour le commit clean en retirant la mention [log].
+
+- [2020-05-20] Valider le message de commit en fonction des nouvelles contraintes de commit.
+
+- [2020-05-20] Vérification si le champ tache est un integer et requis. vérifier si le sujet n'est pas vide. vérifier si la description est remplit.
+
+- [2020-05-20] Pour facilité le travail lorsqu'on lance en mode retry. si le fichier de cache est absent ou vide alors on affiche le cli pour remplir un nouveau commit.
+
+#### Ajouts
+
+#### Retraits
+
+#### Autres
+
 ## [[1.2.1.0] - 2020-05-20](https://git.vigilance.local/slafleur/conventionnal/blob/master/CHANGELOG.md)
     
 #### Nouvelles fonctionnalités
