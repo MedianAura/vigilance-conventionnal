@@ -2,6 +2,24 @@
 
 [//]: # "TEMPLATE"
 
+## [[1.2.1.0] - 2020-05-20](https://git.vigilance.local/slafleur/conventionnal/blob/master/CHANGELOG.md)
+    
+#### Nouvelles fonctionnalités
+
+#### Correctifs
+
+#### Changements
+
+- [2020-05-20] Modification de l'ordre des questions et ne pas demander de sujet quand on n'envoie pas dans le log.
+
+- [2020-05-20] Modification des questions pour être en français dans tous les cas.
+
+#### Ajouts
+
+#### Retraits
+
+#### Autres
+
 ## [[1.2.0.0] - 2020-05-20](https://git.vigilance.local/git@github.com:MedianAura/vigilance-conventionnal/blob/master/CHANGELOG.md)
     
 #### Nouvelles fonctionnalités
