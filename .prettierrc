@@ -1,5 +1,5 @@
 {
-   "endOfLine": "lf",
+   "endOfLine": "crlf",
    "printWidth": 250,
    "quoteProps": "as-needed",
    "semi": true,
