@@ -1,52 +1,76 @@
-import inquirer from 'inquirer';
-import { DescriptionQuestion, LogQuestion, SubjectQuestion, TaskQuestion, TypeQuestion } from '../models/questions';
-import { sprintf } from 'sprintf-js';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { resolve } from 'path';
+import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { injectFromContainer } from '../decorators/inject-from-container';
 import { Git, Logger } from '../services';
+import { CommitModel } from '../models/commit';
+import { ChangelogGenerator } from '../services/changelog-generator';
+import { VersionGenerator } from '../services/version-generator';
+import { get } from 'lodash';
+import parse from 'parse-git-config';
 
-export class Commit {
+export class Generate {
   @injectFromContainer('Git')
   protected git: Git;
 
   @injectFromContainer('Logger')
   protected logger: Logger;
 
-  public async start(): Promise<void> {
-    // Check if staging is clean
-    const stagingIsClean = await this.git.isClean();
-    if (stagingIsClean) {
-      throw new Error('No files added to staging! Did you forget to run git add?');
+  @injectFromContainer('ChangelogGenerator')
+  protected generator: ChangelogGenerator;
+
+  @injectFromContainer('VersionGenerator')
+  protected version: VersionGenerator;
+
+  public async start(args: any, options: any): Promise<void> {
+    const changelogPath = resolve(process.cwd(), 'CHANGELOG.md');
+
+    // Vérifier si le fichier changelog existe.
+    if (!existsSync(changelogPath)) {
+      throw new Error(`Le fichier de changelog n'existe pas dans le projet.`);
     }
 
-    const answers = await inquirer.prompt([LogQuestion, TypeQuestion, SubjectQuestion, DescriptionQuestion, ...TaskQuestion]);
+    // Vérifier si la variable de template existe
+    let content = readFileSync(changelogPath, { encoding: 'utf8' });
+    if (!content.includes('[//]: # "TEMPLATE"')) {
+      throw new Error(`Le fichier de changelog ne contient pas le string <<[//]: # "TEMPLATE">>`);
+    }
 
-    const head = this.buildHead(answers);
+    // Get Latest Tag
+    const tag = this.git.getLatestTag();
+    const nextTag = this.version.generate(tag, args);
 
-    const commitMessage = [head, answers.description].join('\n\n');
+    // Get Commit Log
+    const list: CommitModel[] = [];
+    const logs = await this.git.log(tag);
+    logs.forEach((log) => {
+      const commit = new CommitModel();
 
-    try {
-      await this.git.commit(commitMessage);
-    } catch (error) {
-      this.logger.error(error.toString());
+      commit.hash = log.hash;
+      commit.author = log.authorName;
+      commit.setDate(log.authorDate);
+      commit.setSubject(log.subject);
+      commit.setBody(log.body);
+
+      list.push(commit);
+    });
+
+    const log = this.generator.generate(list, nextTag, this.getRepo(), args.branch);
+
+    if (options.preview) {
+      this.logger.log(log);
+      console.log(log);
+    }
+
+    if (options.write) {
+      this.logger.log('Element added to CHANGELOG.md');
+      content = content.replace('[//]: # "TEMPLATE"', `[//]: # "TEMPLATE"\r\n\r\n${log}`);
+      writeFileSync(changelogPath, content, { encoding: 'utf8' });
     }
   }
 
-  private buildHead(answers: any): string {
-    let logMessage = '';
-    if (answers.log) {
-      logMessage = `[log]`;
-    }
-
-    let taskMessage = '';
-    if (answers.isTaskAffected) {
-      taskMessage = `(${answers.task})`;
-    }
-
-    return sprintf('%(type)s%(log)s%(task)s: %(description)s', {
-      type: answers.type,
-      log: logMessage,
-      task: taskMessage,
-      description: answers.subject
-    });
+  private getRepo(): string {
+    const gitConfig = parse.sync();
+    return get(gitConfig, ['remote "origin"', 'url'], '').replace('git@git.vigilance.local:', '').replace('.git', '');
   }
 }

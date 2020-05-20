@@ -1,5 +1,6 @@
 import { spawnSync, spawn, exec } from 'child_process';
 import dedent from 'dedent';
+import gitlog from 'gitlog';
 import { inject, injectable } from 'inversify';
 import { Logger } from './logger';
 
@@ -60,18 +61,11 @@ export class Git {
     });
   }
 
-  public async log(): Promise<void> {
-    // Add this when ready
-    // const command = 'git log TAG..@';
-    //
-    // // git log --oneline $(git describe --tags --abbrev=0 @^)..@
-    // const test = spawnSync("git", ["describe", "--tags","--abbrev=0"]);
-    //
-    // // console.log(test.stdout.toString());
-    //
-    // const commits = spawnSync("git", ["log"]).stdout.toString();
-    //
-    // // console.log(commits);
+  public async log(_: string): Promise<any[]> {
+    return gitlog({
+      repo: process.cwd(),
+      fields: ['hash', 'subject', 'body', 'authorName', 'authorDate']
+    });
   }
 
   /**
@@ -87,6 +81,6 @@ export class Git {
     if (tag.stderr.toString() !== '') {
       this.logger.error(tag.stderr.toString());
     }
-    return tag.stdout.toString().toLowerCase();
+    return tag.stdout.toString() ? tag.stdout.toString().toLowerCase() : null;
   }
 }
