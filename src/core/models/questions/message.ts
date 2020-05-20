@@ -2,7 +2,7 @@ import { InputQuestion } from 'inquirer';
 
 const DescriptionQuestion: InputQuestion = {
   type: 'input',
-  message: 'Change description ?',
+  message: 'Description pour le changelog :\n',
   name: 'description',
   when(answers) {
     return answers.log;

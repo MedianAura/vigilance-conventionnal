@@ -3,7 +3,7 @@ import { ConfirmQuestion } from 'inquirer';
 const LogQuestion: ConfirmQuestion = {
   type: 'confirm',
   default: 'Y',
-  message: 'Save commit to changelog ?',
+  message: 'Sauvegarder le commit dans le changelog ?',
   name: 'log'
 };
 
