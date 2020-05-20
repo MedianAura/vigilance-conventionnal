@@ -21,6 +21,9 @@ const SubjectQuestion: InputQuestion = {
   transformer(subject) {
     const color = subject.length <= 100 ? chalk.green : chalk.red;
     return color(`(${subject.length}) ${subject}`);
+  },
+  when(answers) {
+    return !answers.log;
   }
 };
 

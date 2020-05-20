@@ -41,7 +41,7 @@ export class Commit {
   }
 
   private async showUserPrompt(): Promise<string> {
-    const answers = await inquirer.prompt([LogQuestion, TypeQuestion, SubjectQuestion, DescriptionQuestion, ...TaskQuestion]);
+    const answers = await inquirer.prompt([TypeQuestion, LogQuestion, SubjectQuestion, DescriptionQuestion, ...TaskQuestion]);
 
     const head = this.buildHead(answers);
 
