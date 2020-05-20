@@ -24,12 +24,10 @@ export class Commit {
     let commitMessage = '';
     if (options.retry) {
       commitMessage = this.cache.getCache();
-    } else {
-      commitMessage = await this.showUserPrompt();
     }
 
     if (!commitMessage) {
-      throw new Error("Commit message can't be empty.");
+      commitMessage = await this.showUserPrompt();
     }
 
     try {
