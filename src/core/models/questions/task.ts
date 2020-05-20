@@ -1,9 +1,17 @@
-import { NumberQuestion, ConfirmQuestion } from 'inquirer';
+import { InputQuestion, ConfirmQuestion } from 'inquirer';
 
-const TaskNumberQuestion: NumberQuestion = {
-  type: 'number',
+const TaskNumberQuestion: InputQuestion = {
+  type: 'input',
   message: 'Numero de la tâche Jira :',
   name: 'task',
+  validate(task) {
+    task = task.trim();
+    if (!task.match(/^\d+$/gm)) {
+      return 'task must be a number';
+    }
+
+    return true;
+  },
   when(answers) {
     return answers.isTaskAffected;
   }

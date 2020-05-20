@@ -8,7 +8,7 @@ const SubjectQuestion: InputQuestion = {
   validate(subject) {
     const message = `Subject length must be less than or equal to 100 characters. Current length is ${subject.length} characters.`;
 
-    if (subject.length === 0) {
+    if (subject.trim().length === 0) {
       return 'subject is required';
     }
 
