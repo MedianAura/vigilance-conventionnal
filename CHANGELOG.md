@@ -2,7 +2,7 @@
 
 [//]: # "TEMPLATE"
 
-## [[1.1.0.0] - 2020-05-19](https://git.vigilance.local/git@github.com:MedianAura/vigilance-conventionnal/blob/master/CHANGELOG.md)
+## [[1.1.0.0] - 2020-05-19](https://git.vigilance.local/vigilance-conventionnal/blob/master/CHANGELOG.md)
     
 #### Nouvelles fonctionnalités
 
