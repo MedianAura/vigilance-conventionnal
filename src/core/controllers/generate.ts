@@ -47,7 +47,7 @@ export class Generate {
       commit.hash = log.hash;
       commit.author = log.authorName;
       commit.setDate(log.authorDate);
-      commit.setSubject(log.subject);
+      commit.setSubject(log.subject, log.rawBody);
       commit.setBody(log.body);
 
       list.push(commit);

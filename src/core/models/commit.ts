@@ -16,8 +16,8 @@ export class CommitModel {
     this.date = moment(date, 'YYYY-MM-DD HH:mm:ss').toDate();
   }
 
-  public setSubject(subject: string): void {
-    this.isLoggable = subject.includes('[log]');
+  public setSubject(subject: string, raw: string): void {
+    this.isLoggable = raw.includes('[log]');
 
     const match = /:\s(.*)?/gm.exec(subject);
     if (match !== null) {
@@ -73,7 +73,7 @@ export class CommitModel {
   private sanitizeDescription(): void {
     this.description = this.description
       .split('\n')
-      .filter((line) => line.trim() !== '')
+      .filter((line) => line.trim() !== '' && line !== '[log]')
       .map((line) => {
         line = capitalize(line);
 

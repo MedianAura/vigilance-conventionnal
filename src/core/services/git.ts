@@ -72,7 +72,7 @@ export class Git {
   public async log(tag: string): Promise<any[]> {
     const options: GitlogOptions<any> = {
       repo: process.cwd(),
-      fields: ['hash', 'subject', 'body', 'authorName', 'authorDate']
+      fields: ['hash', 'subject', 'body', 'rawBody', 'authorName', 'authorDate']
     };
 
     if (tag) {

@@ -45,25 +45,24 @@ export class Commit {
 
     const head = this.buildHead(answers);
 
-    const commitMessage = [head, answers.description].join('\n\n');
-    this.cache.setCache(commitMessage);
-    return commitMessage;
-  }
-
-  private buildHead(answers: any): string {
     let logMessage = '';
     if (answers.log) {
       logMessage = `[log]`;
     }
 
+    const commitMessage = [head, answers.description, logMessage].join('\n\n');
+    this.cache.setCache(commitMessage);
+    return commitMessage;
+  }
+
+  private buildHead(answers: any): string {
     let taskMessage = '';
     if (answers.isTaskAffected) {
       taskMessage = `(${answers.task})`;
     }
 
-    return sprintf('%(type)s%(log)s%(task)s: %(description)s', {
+    return sprintf('%(type)s%(task)s: %(description)s', {
       type: answers.type,
-      log: logMessage,
       task: taskMessage,
       description: answers.subject
     });
