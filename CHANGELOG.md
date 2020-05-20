@@ -2,6 +2,24 @@
 
 [//]: # "TEMPLATE"
 
+## [[1.2.0.0] - 2020-05-20](https://git.vigilance.local/git@github.com:MedianAura/vigilance-conventionnal/blob/master/CHANGELOG.md)
+    
+#### Nouvelles fonctionnalités
+
+- [2020-05-20] Ajout d'un option pour facilement choisir les fichiers qui doivent être staged.
+
+#### Correctifs
+
+#### Changements
+
+#### Ajouts
+
+- [2020-05-20] Ajout d'un commit automatique lors qu'on génère le changelog.
+
+#### Retraits
+
+#### Autres
+
 ## [[1.1.0.0] - 2020-05-19](https://git.vigilance.local/vigilance-conventionnal/blob/master/CHANGELOG.md)
     
 #### Nouvelles fonctionnalités
