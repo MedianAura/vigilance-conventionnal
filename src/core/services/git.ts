@@ -1,6 +1,6 @@
 import { spawnSync, spawn, exec } from 'child_process';
 import dedent from 'dedent';
-import gitlog from 'gitlog';
+import gitlog, { GitlogOptions } from 'gitlog';
 import { inject, injectable } from 'inversify';
 import { Logger } from './logger';
 
@@ -61,11 +61,17 @@ export class Git {
     });
   }
 
-  public async log(_: string): Promise<any[]> {
-    return gitlog({
+  public async log(tag: string): Promise<any[]> {
+    const options: GitlogOptions<any> = {
       repo: process.cwd(),
       fields: ['hash', 'subject', 'body', 'authorName', 'authorDate']
-    });
+    };
+
+    if (tag) {
+      options.branch = `${tag}..HEAD`;
+    }
+
+    return gitlog(options);
   }
 
   /**
@@ -81,6 +87,6 @@ export class Git {
     if (tag.stderr.toString() !== '') {
       this.logger.error(tag.stderr.toString());
     }
-    return tag.stdout.toString() ? tag.stdout.toString().toLowerCase() : null;
+    return tag.stdout.toString() ? tag.stdout.toString().toLowerCase().replace(/\n/, '') : null;
   }
 }

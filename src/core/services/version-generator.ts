@@ -64,6 +64,6 @@ export class VersionGenerator {
         break;
     }
 
-    return [this.minor, this.minor, this.patch, this.hotfix].join('.');
+    return [this.major, this.minor, this.patch, this.hotfix].join('.');
   }
 }

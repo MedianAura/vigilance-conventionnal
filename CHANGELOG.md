@@ -2,6 +2,24 @@
 
 [//]: # "TEMPLATE"
 
+## [[1.1.0.0] - 2020-05-19](https://git.vigilance.local/git@github.com:MedianAura/vigilance-conventionnal/blob/master/CHANGELOG.md)
+    
+#### Nouvelles fonctionnalités
+
+- [2020-05-19] Ajout d'une validation du message de commit pour utilisation dans le hook commit_msg.
+
+- [2020-05-19] Ajout d'un option pour 'retry' le dernier commit en cas d'erreur.
+
+#### Correctifs
+
+#### Changements
+
+#### Ajouts
+
+#### Retraits
+
+#### Autres
+
 ## [[1.0.0.0] - 2020-05-19](https://git.vigilance.local/vigilance-conventionnal/blob/master/CHANGELOG.md)
    
 #### Nouvelles fonctionnalités
