@@ -2,10 +2,8 @@
 import { resolve } from 'path';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { injectFromContainer } from '../decorators/inject-from-container';
-import { Git, Logger } from '../services';
+import { Git, Logger, VersionGenerator, ChangelogGenerator } from '../services';
 import { CommitModel } from '../models/commit';
-import { ChangelogGenerator } from '../services/changelog-generator';
-import { VersionGenerator } from '../services/version-generator';
 import { get } from 'lodash';
 import parse from 'parse-git-config';
 
@@ -66,6 +64,8 @@ export class Generate {
       this.logger.log('Element added to CHANGELOG.md');
       content = content.replace('[//]: # "TEMPLATE"', `[//]: # "TEMPLATE"\r\n\r\n${log}`);
       writeFileSync(changelogPath, content, { encoding: 'utf8' });
+      this.git.stagesFiles(['CHANGELOG.md']);
+      await this.git.commit(`doc: mise a jour du changelog pour la version ${nextTag}`);
     }
   }
 
