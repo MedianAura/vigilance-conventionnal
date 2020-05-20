@@ -5,6 +5,9 @@
   "license": "ISC",
   "author": "",
   "main": "dist/main.js",
+  "bin": {
+    "conventionnal": "./dist/main.js"
+  },
   "scripts": {
     "build": "npm run build:prod && nexe ./dist/main.js",
     "build:dev": "webpack --mode development",
@@ -17,6 +20,7 @@
     "validate": "run-s -ln fix:prettier ci:tsc ci:xo",
     "commit": "node dist/main.js commit",
     "generate": "node dist/main.js generate",
+    "postinstall": "npm run build:prod",
     "staging": "node dist/main.js staging",
     "unit:coverage": "jest --coverage",
     "unit:watch": "jest --watch",
