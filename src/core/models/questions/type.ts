@@ -1,7 +1,7 @@
 import { ListQuestion } from 'inquirer';
 import longest from 'longest';
 
-const types = [
+export const types = [
   {
     description: "Un nouveau feature pour l'utilisateur.",
     name: 'Nouvelle Fonctionnalité',

@@ -12,7 +12,7 @@
     "ci:jest": "jest",
     "ci:prettier": "prettier --check ./**/*.{js,ts,json,vue,html,css,less}",
     "ci:tsc": "tsc -p tsconfig.json --noEmit",
-    "ci:xo": "xo ./{src,tests}/**/*.{js,ts}",
+    "ci:xo": "xo ./src/**/*.{js,ts}",
     "fix:prettier": "prettier --write ./**/*.{js,ts,json,vue,html,css,less}",
     "validate": "run-s -ln fix:prettier ci:tsc ci:xo",
     "commit": "node dist/main.js commit",
@@ -24,11 +24,12 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run ci:tsc && lint-staged"
+      "pre-commit": "npm run ci:tsc && lint-staged",
+      "commit-msg": "node ./dist/main.js validate $HUSKY_GIT_PARAMS"
     }
   },
   "lint-staged": {
-    "./{src,tests}/**/*.{ts,js}": [
+    "./src/**/*.{ts,js}": [
       "prettier --write",
       "xo"
     ],

@@ -4,8 +4,7 @@ import prog from 'caporal';
 import packageConfig from '../package.json';
 import { container } from './ioc';
 import { Logger } from './core/services';
-import { Commit } from './core/controllers/commit';
-import { Generate } from './core/controllers/generate';
+import { Commit, Generate, Validate } from './core/controllers';
 
 prog
   .name(packageConfig.name)
@@ -34,17 +33,19 @@ prog
   })
   // Command Validate
   .command('validate', 'Validate COMMIT_MSG')
-  .action((_, options) => {
+  .argument('<message>', 'Commit message', prog.STRING)
+  .action((args, options) => {
     container.get<Logger>('Logger').setVerbose(options.verbose);
 
-    console.log('VALIDATE');
+    const result = new Validate().start(args.message);
+
+    const code = result ? 0 : 1;
+    process.exit(code);
   });
 
 (async () => {
   prog.parse(process.argv);
 })();
 
-// TODO : Add GENERATE Mode
-// TODO : Add VALIDATE Mode
 // TODO : Add Retry Mode
 // TODO : Add a file stager
