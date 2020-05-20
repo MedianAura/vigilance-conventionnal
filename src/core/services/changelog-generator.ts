@@ -18,82 +18,85 @@ export class ChangelogGenerator {
       (commit) => commit.type.replace(/"/gm, '')
     );
 
-    const change = dedent(`${this.generateHeader(grouped, version, repo, branch)}
+    const change = dedent`
+${this.generateHeader(grouped, version, repo, branch)}
     
-    ${this.generateFeature(grouped)}
-    
-    ${this.generateCorrectif(grouped)}
-    
-    ${this.generareChange(grouped)}
-    
-    ${this.generateAdd(grouped)}
-    
-    ${this.generateRemove(grouped)}
-    
-    ${this.generateOthers(grouped)}
-    `);
+${this.generateFeature(grouped)}
+
+${this.generateCorrectif(grouped)}
+
+${this.generareChange(grouped)}
+
+${this.generateAdd(grouped)}
+
+${this.generateRemove(grouped)}
+
+${this.generateOthers(grouped)}
+    `;
 
     return change;
   }
 
   private generateHeader(grouped: any, version: string, repo: string, branch = 'master'): string {
-    return dedent(`## [[${version}] - ${moment().format('YYYY-MM-DD')}](https://git.vigilance.local/${repo}/blob/${branch}/CHANGELOG.md)
-    
-    ${this.getLogsLine(grouped.maintenance)}
-    `).trim();
+    return dedent`
+## [[${version}] - ${moment().format('YYYY-MM-DD')}](https://git.vigilance.local/${repo}/blob/${branch}/CHANGELOG.md)
+
+${this.getLogsLine(grouped.maintenance)}
+    `.trim();
   }
 
   private generateFeature(grouped: any): string {
-    return dedent(`#### Nouvelles fonctionnalités
-    
-    ${this.getLogsLine(grouped.feature)}
-    `).trim();
+    return dedent`
+#### Nouvelles fonctionnalités
+
+${this.getLogsLine(grouped.feature)}
+    `.trim();
   }
 
   private generateCorrectif(grouped: any): string {
-    return dedent(`
-    #### Correctifs
-    
-    ${this.getLogsLine(grouped.fix)}
-    `).trim();
+    return dedent`
+#### Correctifs
+
+${this.getLogsLine(grouped.fix)}
+    `.trim();
   }
 
   private generareChange(grouped: any): string {
-    return dedent(`
-    #### Changements
-    
-    ${this.getLogsLine(grouped.change)}
-    `).trim();
+    return dedent`
+#### Changements
+
+${this.getLogsLine(grouped.change)}
+    `.trim();
   }
 
   private generateAdd(grouped: any): string {
-    return dedent(`
-    #### Ajouts
-    
-    ${this.getLogsLine(grouped.add)}
-    `).trim();
+    return dedent`
+#### Ajouts
+
+${this.getLogsLine(grouped.add)}
+    `.trim();
   }
 
   private generateRemove(grouped: any): string {
-    return dedent(`    
-    #### Retraits
-    
-    ${this.getLogsLine(grouped.remove)}
-    
-    ${this.getLogsLine(grouped.deprecate)}
-    `).trim();
+    return dedent`    
+#### Retraits
+
+${this.getLogsLine(grouped.remove)}
+
+${this.getLogsLine(grouped.deprecate)}
+    `.trim();
   }
 
   private generateOthers(grouped: any): string {
-    return dedent(`
-    #### Autres
-    
-    ${this.getLogsLine(grouped.test)}
-    
-    ${this.getLogsLine(grouped.doc)}
-    
-    ${this.getLogsLine(grouped.chore)}
-    `).trim();
+    return dedent`
+#### Autres
+
+${this.getLogsLine(grouped.test)}
+
+${this.getLogsLine(grouped.doc)}
+
+${this.getLogsLine(grouped.chore)}
+    `.trim();
   }
 
   private getLogsLine(logs: CommitModel[]): string {

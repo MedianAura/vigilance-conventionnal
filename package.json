@@ -28,7 +28,7 @@
     }
   },
   "lint-staged": {
-    "./{src/tests}/**/*.{ts,js}": [
+    "./{src,tests}/**/*.{ts,js}": [
       "prettier --write",
       "xo"
     ],
@@ -85,5 +85,47 @@
     "webpack-cli": "^3.3.11",
     "webpack-node-externals": "^1.7.2",
     "xo": "^0.30.0"
+  },
+  "xo": {
+    "envs": [
+      "es2020",
+      "node",
+      "browser"
+    ],
+    "extends": [
+      "xo-typescript",
+      "prettier/@typescript-eslint",
+      "plugin:prettier/recommended"
+    ],
+    "extensions": [
+      "ts"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": "tsconfig.json"
+    },
+    "prettier": false,
+    "rules": {
+      "@typescript-eslint/indent": "off",
+      "@typescript-eslint/camelcase": "off",
+      "@typescript-eslint/member-naming": "off",
+      "@typescript-eslint/prefer-readonly-parameter-types": "off",
+      "@typescript-eslint/no-floating-promises": [
+        0,
+        {
+          "ignoreIIFE": true
+        }
+      ],
+      "@typescript-eslint/restrict-template-expressions": [
+        0,
+        {
+          "allowNumber": true,
+          "allowAny": true
+        }
+      ],
+      "new-cap": "off",
+      "padding-line-between-statements": "off"
+    },
+    "space": false
   }
 }

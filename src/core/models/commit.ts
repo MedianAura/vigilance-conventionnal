@@ -52,11 +52,11 @@ export class CommitModel {
 
   public getTask(): string {
     if (this.task === null) return '';
-    return sprintf('[DEV-%(task)s](https://jira.vigilance.local/browse/DEV-%(task)s) ', { task: this.task });
+    return sprintf('[DEV-%(task)s](https://jira.vigilance.local/browse/DEV-%(task)s)', { task: this.task });
   }
 
   public toString(): string {
-    let template = '- %(task)s [%(date)s]\r\n\t%(description)s';
+    let template = '- [%(date)s] %(task)s\r\n\t%(description)s';
     const info = {
       task: this.getTask(),
       description: this.description,
@@ -73,8 +73,8 @@ export class CommitModel {
   private sanitizeDescription(): void {
     this.description = this.description
       .split('\n')
+      .filter((line) => line.trim() !== '')
       .map((line) => {
-        if (line.trim() === '') return '';
         line = capitalize(line);
 
         if (!line.endsWith('.')) {
