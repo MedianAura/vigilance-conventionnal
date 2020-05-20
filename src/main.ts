@@ -57,5 +57,7 @@ prog
   prog.parse(process.argv);
 })();
 
-// TODO : Add a file stager
+// TODO : Revoir le system de cache pour toujours etre en mode RETRY, mais dans le CLI avoir une questions pour utilisé la cache.
+// TODO : Retirer le mode WRITE de generate. Empecher write quand on active preview.
+// TODO : Generate permettre de ne pas auto-commit
 // TODO : Add Logger

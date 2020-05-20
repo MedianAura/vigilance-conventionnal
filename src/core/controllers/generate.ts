@@ -65,7 +65,7 @@ export class Generate {
       content = content.replace('[//]: # "TEMPLATE"', `[//]: # "TEMPLATE"\r\n\r\n${log}`);
       writeFileSync(changelogPath, content, { encoding: 'utf8' });
       this.git.stagesFiles(['CHANGELOG.md']);
-      await this.git.commit(`doc: mise a jour du changelog pour la version ${nextTag}`);
+      await this.git.commit(`doc: mise à jour du changelog pour la version ${nextTag}`);
     }
   }
 
