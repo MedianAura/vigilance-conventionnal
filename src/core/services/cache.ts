@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { resolve } from 'path';
 import { injectable } from 'inversify';
-import { readFileSync, writeFileSync, ensureDirSync, emptyDirSync } from 'fs-extra';
+import { readFileSync, writeFileSync, existsSync, ensureDirSync, emptyDirSync } from 'fs-extra';
 import cacheOrTmpDir from 'cache-or-tmp-directory';
 
 @injectable()
@@ -14,6 +14,7 @@ export class Cache {
   }
 
   public getCache(): string {
+    if (!existsSync(this.filePath)) return '';
     return readFileSync(this.filePath, { encoding: 'utf8' });
   }
 
