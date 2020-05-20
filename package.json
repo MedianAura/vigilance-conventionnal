@@ -38,9 +38,11 @@
     ]
   },
   "dependencies": {
+    "cache-or-tmp-directory": "^1.0.0",
     "caporal": "^1.4.0",
     "chalk": "^4.0.0",
     "dedent": "^0.7.0",
+    "fs-extra": "^9.0.0",
     "gitlog": "^4.0.0",
     "iconv-lite": "^0.5.1",
     "inquirer": "^7.1.0",
@@ -59,6 +61,7 @@
     "@babel/core": "^7.9.6",
     "@types/chalk": "^2.2.0",
     "@types/dedent": "^0.7.0",
+    "@types/fs-extra": "^9.0.1",
     "@types/inquirer": "^6.5.0",
     "@types/jest": "^25.2.2",
     "@types/lodash": "^4.14.151",

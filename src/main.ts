@@ -11,10 +11,11 @@ prog
   .version(packageConfig.version)
   // Command COMMIT
   .command('commit', 'Add a commit')
+  .option('--retry', 'Retry last commit.', prog.BOOL, false)
   .action(async (_, options) => {
     container.get<Logger>('Logger').setVerbose(options.verbose);
 
-    await new Commit().start();
+    await new Commit().start(options);
 
     process.exit(0);
   })

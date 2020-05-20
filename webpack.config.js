@@ -3,7 +3,7 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const threadLoader = require('thread-loader');
 
-threadLoader.warmup({}, ['babel-loader', 'ts-loader']);
+// threadLoader.warmup({}, ['babel-loader', 'ts-loader']);
 
 const cacheLoader = {
   loader: 'cache-loader',
