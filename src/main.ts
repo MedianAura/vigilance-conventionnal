@@ -4,7 +4,7 @@ import prog from 'caporal';
 import packageConfig from '../package.json';
 import { container } from './ioc';
 import { Logger } from './core/services';
-import { Commit, Generate, Validate } from './core/controllers';
+import { Commit, Generate, Staging, Validate } from './core/controllers';
 
 prog
   .name(packageConfig.name)
@@ -42,11 +42,20 @@ prog
 
     const code = result ? 0 : 1;
     process.exit(code);
+  })
+  // Command Staging
+  .command('staging', 'Staging mode.')
+  .action(async (args, options) => {
+    container.get<Logger>('Logger').setVerbose(options.verbose);
+
+    await new Staging().start();
+
+    process.exit(0);
   });
 
 (async () => {
   prog.parse(process.argv);
 })();
 
-// TODO : Add Retry Mode
 // TODO : Add a file stager
+// TODO : Add Logger

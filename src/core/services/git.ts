@@ -9,6 +9,10 @@ export class Git {
   @inject('Logger')
   public logger: Logger;
 
+  /**
+   *
+   * @param commitMessage
+   */
   public async commit(commitMessage): Promise<any> {
     // Definition de l'action
     const command = 'git';
@@ -61,6 +65,10 @@ export class Git {
     });
   }
 
+  /**
+   *
+   * @param tag
+   */
   public async log(tag: string): Promise<any[]> {
     const options: GitlogOptions<any> = {
       repo: process.cwd(),
@@ -88,5 +96,50 @@ export class Git {
       this.logger.error(tag.stderr.toString());
     }
     return tag.stdout.toString() ? tag.stdout.toString().toLowerCase().replace(/\n/, '') : null;
+  }
+
+  /**
+   *
+   * @param files
+   */
+  public stagesFiles(files: string[]): void {
+    spawnSync('git', ['add'].concat(files));
+  }
+
+  /**
+   *
+   */
+  public getUnstagedFiles(): string[] {
+    spawnSync('git', ['restore', '--staged', '.']);
+
+    const files = [];
+
+    // Get a list of unstaged files
+    let output = spawnSync('git', ['-c', 'core.quotepath=false', 'diff-index', '--name-status', '-M', '--diff-filter=ACDMRTUXB', 'HEAD']);
+    if (output.stderr.toString().trim() !== '') {
+      throw new Error(output.stderr.toString());
+    }
+    output.stdout
+      .toString()
+      .split('\n')
+      .filter((line) => line.trim() !== '')
+      .forEach((line) => {
+        files.push(line.split('\t')[1]);
+      });
+
+    // Get a list of untracked files
+    output = spawnSync('git', ['ls-files', '--others', '--exclude-standard']);
+    if (output.stderr.toString().trim() !== '') {
+      throw new Error(output.stderr.toString());
+    }
+    output.stdout
+      .toString()
+      .split('\n')
+      .filter((line) => line.trim() !== '')
+      .forEach((line) => {
+        files.push(line);
+      });
+
+    return files;
   }
 }
