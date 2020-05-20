@@ -13,7 +13,7 @@ export class Validate {
     const commitMessage = readFileSync(resolve(process.cwd(), message), { encoding: 'utf8' });
 
     const validTypes = types.map((type) => type.value).join('|');
-    const regex = new RegExp(`^(${validTypes})(\\[log\\])?(\\(\\d+\\))?:\\s.*$`, 'gm');
+    const regex = new RegExp(`^(${validTypes})(\\(\\d+\\))?:\\s.*$`, 'gm');
 
     return regex.exec(commitMessage) !== null;
   }
